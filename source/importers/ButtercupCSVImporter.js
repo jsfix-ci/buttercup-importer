@@ -1,7 +1,7 @@
 const fs = require("fs");
 const pify = require("pify");
 const { Group, Vault } = require("buttercup");
-const csvparse = require("csv-parse/lib/sync");
+const csvparse = require("csv-parse/sync");
 
 const NON_COPY_KEYS = ["id", "title"];
 
@@ -28,7 +28,7 @@ class ButtercupCSVImporter {
     export() {
         return Promise.resolve().then(() => {
             const vault = new Vault();
-            csvparse(this._csvData, { columns: true }).forEach(bcupItem => {
+            csvparse.parse(this._csvData, { columns: true }).forEach(bcupItem => {
                 const {
                     ["!type"]: itemType,
                     ["!group_id"]: groupID,

@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const pify = require("pify");
 const { Vault } = require("buttercup");
-const csvparse = require("csv-parse/lib/sync");
+const csvparse = require("csv-parse/sync");
 
 const readFile = pify(fs.readFile);
 
@@ -30,7 +30,7 @@ class CSVImporter {
         return Promise.resolve().then(() => {
             const vault = new Vault();
             const group = vault.createGroup(this._groupName);
-            csvparse(this._csvData, { columns: true }).forEach(
+            csvparse.parse(this._csvData, { columns: true }).forEach(
                 (item, index) => {
                     const entry = group.createEntry(
                         item.name || item.title || item.url || `Entry ${index}`
